@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Port & Service Enumeration Tool</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+    }
+    header {
+      background: #1f2937;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #1e40af;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+    }
+    th {
+      background: #2563eb;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header>Port & Service Enumeration Tool</header>
+  <div class="container">
+    <form id="scanForm">
+      <label for="target">Target IP/Domain:</label>
+      <input type="text" id="target" required>
+
+      <label for="ports">Ports (comma separated):</label>
+      <input type="text" id="ports" value="21,22,80,443,8080">
+
+      <button type="submit">Scan</button>
+    </form>
+
+    <h2>Results</h2>
+    <table id="resultsTable">
+      <tr><th>Port</th><th>Status</th><th>Banner</th></tr>
+    </table>
+  </div>
+
+  <script>
+    document.getElementById("scanForm").addEventListener("submit", async function(e){
+      e.preventDefault();
+
+      const target = document.getElementById("target").value;
+      const ports = document.getElementById("ports").value.split(",").map(Number);
+
+      const response = await fetch("http://127.0.0.1:5000/scan", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({target, ports})
+      });
+      const data = await response.json();
+
+      const table = document.getElementById("resultsTable");
+      table.innerHTML = "<tr><th>Port</th><th>Status</th><th>Banner</th></tr>";
+
+      data.results.forEach(r => {
+        let statusColor;
+        if (r.status === "OPEN" && r.banner !== "Open (no banner returned)") {
+          statusColor = "green"; // Open with banner
+        } else if (r.status === "OPEN") {
+          statusColor = "orange"; // Open but no banner
+        } else {
+          statusColor = "red"; // Closed
+        }
+
+        table.innerHTML += `
+          <tr>
+            <td>${r.port}</td>
+            <td style="color:${statusColor}; font-weight:bold;">${r.status}</td>
+            <td>${r.banner}</td>
+          </tr>`;
+      });
+    });
+  </script>
+</body>
+</html>
