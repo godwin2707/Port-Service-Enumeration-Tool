@@ -1,10 +1,10 @@
-# 🔍 Port & Service Enumeration Tool
+#  Port & Service Enumeration Tool
 
 A lightweight, full-stack network utility that scans specified ports on a target IP or domain, detects open/closed status, and retrieves service banners. Built with a **Flask backend** and a **responsive HTML/JS frontend**, this tool is ideal for learning and demonstrating core cybersecurity and networking concepts.
 
 ---
 
-## 🚀 Features
+##  Features
 
 - ✅ TCP port scanning using Python sockets
 - ✅ Banner grabbing for HTTP services (`GET /` probing)
@@ -14,7 +14,7 @@ A lightweight, full-stack network utility that scans specified ports on a target
 
 ---
 
-## 🧠 Technologies Used
+##  Technologies Used
 
 - **Frontend:** HTML, CSS, JavaScript  
 - **Backend:** Python, Flask, Flask-CORS  
@@ -22,7 +22,7 @@ A lightweight, full-stack network utility that scans specified ports on a target
 
 ---
 
-## 📸 Sample Output
+##  Sample Output
 
 | Port | Status | Banner |
 |------|--------|--------|
