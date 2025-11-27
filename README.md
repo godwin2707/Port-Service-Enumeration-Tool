@@ -6,11 +6,11 @@ A lightweight, full-stack network utility that scans specified ports on a target
 
 ##  Features
 
-- ✅ TCP port scanning using Python sockets
-- ✅ Banner grabbing for HTTP services (`GET /` probing)
-- ✅ Dynamic frontend with real-time results
-- ✅ CORS-enabled Flask API for smooth integration
-- ✅ Color-coded status indicators (Open with banner, Open without banner, Closed)
+- TCP port scanning using Python sockets
+- Banner grabbing for HTTP services (`GET /` probing)
+- Dynamic frontend with real-time results
+- CORS-enabled Flask API for smooth integration
+- Color-coded status indicators (Open with banner, Open without banner, Closed)
 
 ---
 
